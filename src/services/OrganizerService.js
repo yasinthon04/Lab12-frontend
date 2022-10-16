@@ -9,7 +9,25 @@ const apiClient = axios.create({
   }
 })
 export default {
+  getOrganizerPage(perPage, page) {
+    return apiClient.get('/organizers?_limit=' + perPage + '&_page=' + page)
+  },
   getOrganizers() {
     return apiClient.get('/organizers')
-  }
+  },
+  getOrganizer(id) {
+    return apiClient.get('/organizers/' + id)
+  },
+  uploadFile(file) {
+    let formData = new FormData()
+    formData.append('file', file)
+    return apiClient.post('/uploadFile', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  saveOrganizer(organizer) {
+    return apiClient.post('/organizers', organizer)
+}
 }

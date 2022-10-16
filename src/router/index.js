@@ -3,6 +3,7 @@ import EventListView from '@/views/EventListView.vue'
 import EventEditView from '@/views/event/EventEditView.vue'
 import EventRegisterView from '@/views/event/EventRegisterView.vue'
 import AboutView from '../views/AboutView.vue'
+import AddOrganizer from '@/views/OrganizerForm.vue'
 import EventLayoutView from '@/views/event/EventLayoutView.vue'
 import EventDetailView from '@/views/event/EventDetailView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -12,6 +13,9 @@ import NProgress from 'nprogress'
 import GStore from '@/store'
 import EventService from '@/services/EventService'
 import OrganizerService from '@/services/OrganizerService.js'
+import OrganizerDetailView from '@/views/organizer/OrganizerDetailView.vue'
+import OrganizerLayoutView from '@/views/organizer/OrganizerLayoutView.vue'
+import OrganizerView from '@/views/OrganizerListView.vue'
 const routes = [
   {
     path: '/',
@@ -23,6 +27,43 @@ const routes = [
     path: '/about',
     name: 'about',
     component: AboutView
+  },
+  {
+    path: '/organizer',
+    name: 'OrganizerView',
+    component: OrganizerView,
+    props: (route) => ({ page: parseInt(route.query.page) || 1 })
+  },
+  {
+    path: '/organizer/:id',
+    name: 'OrganizerLayoutView',
+    component: OrganizerLayoutView,
+    beforeEnter: (to) => {
+      console.log(to.params.id)
+      return OrganizerService.getOrganizer(to.params.id)
+        .then((response) => {
+          GStore.organizers = response.data
+        })
+        .catch((error) => {
+          if (error.response && error.response.start == 404) {
+            return {
+              name: '404Resource',
+              parames: { resource: 'event' }
+            }
+          } else {
+            return { name: 'NetworkError' }
+          }
+        })
+    },
+    props: true,
+    children: [
+      {
+        path: 'organizerDetail',
+        name: 'organizerDetail',
+        component: OrganizerDetailView,
+        props: true
+      }
+    ]
   },
   {
     path: '/event/:id',
@@ -80,6 +121,11 @@ const routes = [
           console.log('cannot load organizer')
         })
     }
+  },
+  {
+    path: '/add-organizer',
+    name: 'AddOrganizer',
+    component: AddOrganizer
   },
   {
     path: '/404/:resource',
