@@ -111,6 +111,7 @@ export default {
 .pagination {
   display: flex;
   width: 290px;
+  margin-left:800px;
 }
 .pagination a {
   flex: 1;
@@ -126,4 +127,5 @@ export default {
 .search-box {
   width: 300px;
 }
+
 </style>

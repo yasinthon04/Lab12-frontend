@@ -26,6 +26,7 @@ export default {
   cursor: pointer;
   border: 1px solid #39495c;
   margin-bottom: 18px;
+  margin-left:800px;
   
 }
 .organizer-card:hover {
@@ -36,6 +37,6 @@ export default {
 .organizer-link {
   color: #2c3e50;
   text-decoration: none;
-  
+  align-self: center;
 }
 </style>
