@@ -28,7 +28,8 @@
         v-model="event.organizer.id"
         label="Select an Organizer"
       />
-
+      <h3>The image of the Event</h3>
+      <UploadImages />
       <button type="submit">Submit</button>
     </form>
 
@@ -38,9 +39,12 @@
 
 <script>
 import EventService from '@/services/EventService.js'
+import UploadImages from 'vue-upload-drop-images'
 export default {
   inject: ['GStore'],
-
+  components: {
+    UploadImages
+  },
   data() {
     return {
       event: {
