@@ -17,6 +17,7 @@ export default {
     return apiClient.get('/event/' + id)
   },
   saveEvent(event) {
+    console.log(event)
     return apiClient.post('/event', event)
   },
   getEventByKeyword(keyword, perPage, page) {
